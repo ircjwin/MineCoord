@@ -1,0 +1,21 @@
+{
+  "name": "minecoord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "launch": "node deploy-commands.js && node index.js"
+  },
+  "keywords": [],
+  "author": "Christopher 'C.J.' Irwin",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}
