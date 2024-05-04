@@ -20,10 +20,49 @@ module.exports = {
 		},
 		y: {
 			type: Sequelize.INTEGER,
-			allowNull: true,
 		},
 		z: {
 			type: Sequelize.INTEGER,
+			allowNull: false,
+		},
+	}),
+	Jobs: sequelize.define('jobs', {
+		id: {
+			type: Sequelize.INTEGER,
+			primaryKey: true,
+			autoIncrement: true,
+		},
+		poster: {
+			type: Sequelize.STRING,
+			allowNull: false,
+		},
+		desc: {
+			type: Sequelize.STRING,
+			allowNull: false,
+			unique: true,
+		},
+	}),
+	Resources: sequelize.define('resources', {
+		id: {
+			type: Sequelize.INTEGER,
+			primaryKey: true,
+			autoIncrement: true,
+		},
+		name: {
+			type: Sequelize.STRING,
+			allowNull: false,
+			unique: true,
+		},
+	}),
+	JobResources: sequelize.define('job_resources', {
+		id: {
+			type: Sequelize.INTEGER,
+			primaryKey: true,
+			autoIncrement: true,
+		},
+		resource_qty: {
+			type: Sequelize.INTEGER,
+			defaultValue: 0,
 			allowNull: false,
 		},
 	}),

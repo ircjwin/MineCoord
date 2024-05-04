@@ -4,7 +4,7 @@ const { Marks } = require('../../entities.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('unmark')
-		.setDescription('Adds landmark to database.')
+		.setDescription('Removes landmark from database.')
 		.addStringOption(option =>
 			option
 				.setName('name')
