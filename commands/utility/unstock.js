@@ -1,9 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Resources } = require('../../entities.js');
+const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('removeresource')
+		.setName('unstock')
 		.setDescription('Removes resource from database.')
 		.addStringOption(option =>
 			option
@@ -15,7 +16,7 @@ module.exports = {
 		const rowCount = await Resources.destroy({ where: { name: resourceName } });
 
 		if (!rowCount) return interaction.reply('That resource did not exist.');
-
+		Cache.loadResourceCache();
 		return interaction.reply('Resource deleted.');
 	},
 };

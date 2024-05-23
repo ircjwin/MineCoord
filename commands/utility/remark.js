@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Marks } = require('../../entities.js');
+const { Mark: Marks } = require('../../entities.js');
+const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -44,6 +45,7 @@ module.exports = {
 		const affectedRows = await Marks.update(markUpdates, { where: { name: markName } });
 
 		if (affectedRows > 0) {
+			Cache.loadMarkCache();
 			return interaction.reply(`Mark ${markName} was edited.`);
 		}
 

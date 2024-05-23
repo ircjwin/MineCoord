@@ -1,9 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Jobs } = require('../../entities.js');
+const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('editjob')
+		.setName('repost')
 		.setDescription('Edits job in database.')
 		.addStringOption(option =>
 			option
@@ -21,6 +22,7 @@ module.exports = {
 		const affectedRows = await Jobs.update({ desc: newJobDesc }, { where: { desc: jobDesc } });
 
 		if (affectedRows > 0) {
+			Cache.loadJobCache();
 			return interaction.reply(`Job ${jobDesc} was edited.`);
 		}
 

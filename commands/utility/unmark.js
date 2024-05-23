@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Marks } = require('../../entities.js');
+const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,7 +16,7 @@ module.exports = {
 		const rowCount = await Marks.destroy({ where: { name: markName } });
 
 		if (!rowCount) return interaction.reply('That mark did not exist.');
-
+		Cache.loadMarkCache();
 		return interaction.reply('Mark deleted.');
 	},
 };

@@ -1,9 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Jobs } = require('../../entities.js');
+const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('removejob')
+		.setName('unpost')
 		.setDescription('Removes job from database.')
 		.addStringOption(option =>
 			option
@@ -15,7 +16,7 @@ module.exports = {
 		const rowCount = await Jobs.destroy({ where: { desc: jobDesc } });
 
 		if (!rowCount) return interaction.reply('That job did not exist.');
-
+		Cache.loadJobCache();
 		return interaction.reply('Job deleted.');
 	},
 };

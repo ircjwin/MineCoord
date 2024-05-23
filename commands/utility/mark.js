@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Marks } = require('../../entities.js');
+const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -37,7 +38,7 @@ module.exports = {
 				y: markY,
 				z: markZ,
 			});
-
+			Cache.loadMarkCache();
 			return interaction.reply(`Mark ${mark.name} added.`);
 		}
 		catch (error) {

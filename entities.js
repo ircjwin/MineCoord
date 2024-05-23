@@ -8,7 +8,12 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 });
 
 module.exports = {
-	Marks: sequelize.define('marks', {
+	Mark: sequelize.define('Mark', {
+		id: {
+			type: Sequelize.INTEGER,
+			primaryKey: true,
+			autoIncrement: true,
+		},
 		name: {
 			type: Sequelize.STRING,
 			unique: true,
@@ -26,7 +31,7 @@ module.exports = {
 			allowNull: false,
 		},
 	}),
-	Jobs: sequelize.define('jobs', {
+	Job: sequelize.define('Job', {
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
@@ -36,13 +41,16 @@ module.exports = {
 			type: Sequelize.STRING,
 			allowNull: false,
 		},
-		desc: {
+		name: {
 			type: Sequelize.STRING,
 			allowNull: false,
-			unique: true,
+			unqiue: true,
+		},
+		desc: {
+			type: Sequelize.STRING,
 		},
 	}),
-	Resources: sequelize.define('resources', {
+	Resource: sequelize.define('Resource', {
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
@@ -54,16 +62,19 @@ module.exports = {
 			unique: true,
 		},
 	}),
-	JobResources: sequelize.define('job_resources', {
+	JobResource: sequelize.define('JobResource', {
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
 		},
-		resource_qty: {
+		resourceQty: {
 			type: Sequelize.INTEGER,
 			defaultValue: 0,
 			allowNull: false,
 		},
 	}),
 };
+
+module.exports.Job.belongsToMany(module.exports.Resource, { through: module.exports.JobResource });
+module.exports.Resource.belongsToMany(module.exports.Job, { through: module.exports.JobResource });

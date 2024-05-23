@@ -1,9 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Resources } = require('../../entities.js');
+const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('addresource')
+		.setName('stock')
 		.setDescription('Adds resource to database.')
 		.addStringOption(option =>
 			option
@@ -17,7 +18,7 @@ module.exports = {
 			const resource = await Resources.create({
 				name: resourceName,
 			});
-
+			Cache.loadResourceCache();
 			return interaction.reply(`Resource ${resource.name} added.`);
 		}
 		catch (error) {

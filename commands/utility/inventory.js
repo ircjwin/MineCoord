@@ -3,7 +3,7 @@ const { Resources } = require('../../entities.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('showresources')
+		.setName('inventory')
 		.setDescription('Lists all resources.'),
 	async execute(interaction) {
 		const resourceList = await Resources.findAll({ attributes: ['name'] });

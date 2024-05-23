@@ -1,9 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Resources } = require('../../entities.js');
+const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('editresource')
+		.setName('restock')
 		.setDescription('Edits resource in database.')
 		.addStringOption(option =>
 			option
@@ -21,6 +22,7 @@ module.exports = {
 		const affectedRows = await Resources.update({ name: newResourceName }, { where: { name: resourceName } });
 
 		if (affectedRows > 0) {
+			Cache.loadResourceCache();
 			return interaction.reply(`Resource ${resourceName} was edited.`);
 		}
 
