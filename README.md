@@ -5,4 +5,8 @@
 
  A Minecraft Discord bot that stores the names and coordinates of server landmarks with more features to come.
 
-MineCoord is not affiliated with Mojang AB or Microsoft in any way.
+## License
+Copyright &copy; 2024 Chris "C.J." Irwin<br>
+This project is [GNU AGPLv3](LICENSE) licensed.
+
+**MineCoord is not affiliated with Mojang AB or Microsoft in any way.**
