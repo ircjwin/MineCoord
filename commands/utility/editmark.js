@@ -4,7 +4,7 @@ const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('remark')
+		.setName('editmark')
 		.setDescription('Edits landmark in database.')
 		.addStringOption(option =>
 			option

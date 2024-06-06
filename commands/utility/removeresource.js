@@ -4,7 +4,7 @@ const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('unstock')
+		.setName('removeresource')
 		.setDescription('Removes resource from database.')
 		.addStringOption(option =>
 			option

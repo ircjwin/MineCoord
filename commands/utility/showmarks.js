@@ -3,7 +3,7 @@ const { Mark } = require('../../models.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('map')
+		.setName('showmarks')
 		.setDescription('Lists all landmarks.'),
 	async execute(interaction) {
 		const markList = await Mark.findAll({ attributes: ['name', 'x', 'y', 'z'] });
@@ -14,6 +14,6 @@ module.exports = {
 			return stringBuffer.join('');
 		}).join('\n') || 'No marks set.';
 
-		return interaction.reply(`Your saved marks:\n${markString}`);
+		return interaction.reply(`Landmarks:\n${markString}`);
 	},
 };

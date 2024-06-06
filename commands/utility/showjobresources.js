@@ -4,7 +4,7 @@ const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('showjobresource')
+		.setName('showjobresources')
 		.setDescription('Shows all resources for a job.')
 		.addStringOption(option =>
 			option.setName('job')
@@ -25,8 +25,8 @@ module.exports = {
 		const job = await Job.findOne({ where: { id: jobId } });
 		const jobResourceList = await job.getJobResources({ include: Resource });
 		const jobResourceString = jobResourceList.map(j => {
-			return `${j.resource.name}    filled:  ${j.filledQuantity}    total:  ${j.totalQuantity}`;
+			`    ${j.resource.name}    filled:  ${j.filledQuantity}    total:  ${j.totalQuantity}`;
 		}).join('\n') || 'No job resources set.';
-		return interaction.reply(`${jobResourceString}`);
+		return interaction.reply(`${job.name}'s resource list:\n${jobResourceString}`);
 	},
 };

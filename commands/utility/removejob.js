@@ -4,7 +4,7 @@ const Cache = require('../../cache.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('unpost')
+		.setName('removejob')
 		.setDescription('Removes job from database.')
 		.addStringOption(option =>
 			option
