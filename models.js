@@ -8,7 +8,8 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 });
 
 module.exports = {
-	Mark: sequelize.define('Mark', {
+	Mark: sequelize.define('mark', {
+		underscored: true,
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
@@ -31,7 +32,8 @@ module.exports = {
 			allowNull: false,
 		},
 	}),
-	Job: sequelize.define('Job', {
+	Job: sequelize.define('job', {
+		underscored: true,
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
@@ -50,7 +52,8 @@ module.exports = {
 			type: Sequelize.STRING,
 		},
 	}),
-	Resource: sequelize.define('Resource', {
+	Resource: sequelize.define('resource', {
+		underscored: true,
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
@@ -62,19 +65,37 @@ module.exports = {
 			unique: true,
 		},
 	}),
-	JobResource: sequelize.define('JobResource', {
+	JobResource: sequelize.define('jobResource', {
+		underscored: true,
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
 		},
-		resourceQty: {
+		filledQuantity: {
+			type: Sequelize.INTEGER,
+			defaultValue: 0,
+			allowNull: false,
+		},
+		totalQuantity: {
 			type: Sequelize.INTEGER,
 			defaultValue: 0,
 			allowNull: false,
 		},
 	}),
-};
+	async init() {
+		this.Job.belongsToMany(this.Resource, { through: this.JobResource });
+		this.Resource.belongsToMany(this.Job, { through: this.JobResource });
 
-module.exports.Job.belongsToMany(module.exports.Resource, { through: module.exports.JobResource });
-module.exports.Resource.belongsToMany(module.exports.Job, { through: module.exports.JobResource });
+		this.Job.hasMany(this.JobResource);
+		this.JobResource.belongsTo(this.Job);
+
+		this.Resource.hasMany(this.JobResource);
+		this.JobResource.belongsTo(this.Resource);
+
+		await this.Job.sync();
+		await this.Resource.sync();
+		await this.Mark.sync();
+		await this.JobResource.sync();
+	},
+};

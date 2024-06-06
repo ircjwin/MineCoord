@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Resources } = require('../../entities.js');
+const { Resource } = require('../../models.js');
 const Cache = require('../../cache.js');
 
 module.exports = {
@@ -15,10 +15,11 @@ module.exports = {
 		const resourceName = interaction.options.getString('name');
 
 		try {
-			const resource = await Resources.create({
+			const resource = await Resource.create({
 				name: resourceName,
 			});
-			Cache.loadResourceCache();
+			await Cache.loadResourceCache();
+
 			return interaction.reply(`Resource ${resource.name} added.`);
 		}
 		catch (error) {

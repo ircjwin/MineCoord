@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Jobs } = require('../../entities.js');
+const { Job } = require('../../models.js');
 const Cache = require('../../cache.js');
 
 module.exports = {
@@ -13,10 +13,10 @@ module.exports = {
 				.setRequired(true)),
 	async execute(interaction) {
 		const jobDesc = interaction.options.getString('desc');
-		const rowCount = await Jobs.destroy({ where: { desc: jobDesc } });
+		const rowCount = await Job.destroy({ where: { desc: jobDesc } });
 
 		if (!rowCount) return interaction.reply('That job did not exist.');
-		Cache.loadJobCache();
+		await Cache.loadJobCache();
 		return interaction.reply('Job deleted.');
 	},
 };

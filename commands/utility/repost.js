@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Jobs } = require('../../entities.js');
+const { Job } = require('../../models.js');
 const Cache = require('../../cache.js');
 
 module.exports = {
@@ -19,10 +19,10 @@ module.exports = {
 		const jobDesc = interaction.options.getString('desc');
 		const newJobDesc = interaction.options.getString('new-desc');
 
-		const affectedRows = await Jobs.update({ desc: newJobDesc }, { where: { desc: jobDesc } });
+		const affectedRows = await Job.update({ desc: newJobDesc }, { where: { desc: jobDesc } });
 
 		if (affectedRows > 0) {
-			Cache.loadJobCache();
+			await Cache.loadJobCache();
 			return interaction.reply(`Job ${jobDesc} was edited.`);
 		}
 

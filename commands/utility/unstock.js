@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Resources } = require('../../entities.js');
+const { Resource } = require('../../models.js');
 const Cache = require('../../cache.js');
 
 module.exports = {
@@ -13,10 +13,10 @@ module.exports = {
 				.setRequired(true)),
 	async execute(interaction) {
 		const resourceName = interaction.options.getString('desc');
-		const rowCount = await Resources.destroy({ where: { name: resourceName } });
+		const rowCount = await Resource.destroy({ where: { name: resourceName } });
 
 		if (!rowCount) return interaction.reply('That resource did not exist.');
-		Cache.loadResourceCache();
+		await Cache.loadResourceCache();
 		return interaction.reply('Resource deleted.');
 	},
 };

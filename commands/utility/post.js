@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Jobs } = require('../../entities.js');
+const { Job } = require('../../models.js');
 const Cache = require('../../cache.js');
 
 module.exports = {
@@ -21,19 +21,20 @@ module.exports = {
 		const jobDesc = interaction.options.getString('desc');
 
 		try {
-			const job = await Jobs.create({
+			const job = await Job.create({
 				poster: jobPoster,
 				name: jobName,
 				desc: jobDesc,
 			});
-			Cache.loadJobCache();
+			await Cache.loadJobCache();
+
 			return interaction.reply(`Job ${job.name} added.`);
 		}
 		catch (error) {
 			if (error.name === 'SequelizeUniqueConstraintError') {
 				return interaction.reply('That job already exists.');
 			}
-			console.log(error);
+
 			return interaction.reply('Something went wrong with adding your job.');
 		}
 	},

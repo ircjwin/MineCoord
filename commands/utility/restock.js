@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Resources } = require('../../entities.js');
+const { Resource } = require('../../models.js');
 const Cache = require('../../cache.js');
 
 module.exports = {
@@ -19,10 +19,10 @@ module.exports = {
 		const resourceName = interaction.options.getString('name');
 		const newResourceName = interaction.options.getString('new-name');
 
-		const affectedRows = await Resources.update({ name: newResourceName }, { where: { name: resourceName } });
+		const affectedRows = await Resource.update({ name: newResourceName }, { where: { name: resourceName } });
 
 		if (affectedRows > 0) {
-			Cache.loadResourceCache();
+			await Cache.loadResourceCache();
 			return interaction.reply(`Resource ${resourceName} was edited.`);
 		}
 

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Marks } = require('../../entities.js');
+const { Mark } = require('../../models.js');
 const Cache = require('../../cache.js');
 
 module.exports = {
@@ -32,13 +32,13 @@ module.exports = {
 		const markZ = interaction.options.getNumber('z');
 
 		try {
-			const mark = await Marks.create({
+			const mark = await Mark.create({
 				name: markName,
 				x: markX,
 				y: markY,
 				z: markZ,
 			});
-			Cache.loadMarkCache();
+			await Cache.loadMarkCache();
 			return interaction.reply(`Mark ${mark.name} added.`);
 		}
 		catch (error) {
