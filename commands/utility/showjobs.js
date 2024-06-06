@@ -8,7 +8,9 @@ module.exports = {
 	async execute(interaction) {
 		const jobList = await Job.findAll({ attributes: ['poster', 'name'] });
 		const jobString = jobList.map(j => {
-			`    ${j.poster},  ${j.name}`;
+			const stringBuffer = [`    poster: ${j.poster}, name: ${j.name}`];
+			stringBuffer.push(j.description ? `, description: ${j.description}` : '');
+			return stringBuffer.join('');
 		}).join('\n') || 'No jobs set.';
 		return interaction.reply(`Jobs:\n${jobString}`);
 	},

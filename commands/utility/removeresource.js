@@ -9,7 +9,7 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName('name')
-				.setDescription('The name of the resource.')
+				.setDescription('Name of the resource.')
 				.setRequired(true)),
 	async execute(interaction) {
 		const resourceName = interaction.options.getString('desc');
@@ -17,6 +17,6 @@ module.exports = {
 
 		if (!rowCount) return interaction.reply('That resource did not exist.');
 		await Cache.loadResourceCache();
-		return interaction.reply('Resource deleted.');
+		return interaction.reply('Resource removed.');
 	},
 };

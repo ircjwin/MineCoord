@@ -25,7 +25,7 @@ module.exports = {
 		const job = await Job.findOne({ where: { id: jobId } });
 		const jobResourceList = await job.getJobResources({ include: Resource });
 		const jobResourceString = jobResourceList.map(j => {
-			`    ${j.resource.name}    filled:  ${j.filledQuantity}    total:  ${j.totalQuantity}`;
+			`    resource: ${j.resource.name}, filled: ${j.filledQuantity}, total: ${j.totalQuantity}`;
 		}).join('\n') || 'No job resources set.';
 		return interaction.reply(`${job.name}'s resource list:\n${jobResourceString}`);
 	},

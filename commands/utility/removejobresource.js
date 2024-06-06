@@ -27,7 +27,7 @@ module.exports = {
 		if (focusedOption.name === 'resource') {
 			choices = Cache.resourceCache;
 		}
-		console.log(choices);
+
 		const filtered = choices.filter(choice => choice.name.startsWith(focusedOption.value));
 		await interaction.respond(
 			filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
@@ -39,6 +39,6 @@ module.exports = {
 		const job = await Job.findOne({ where: { id: jobId } });
 		const resource = await Resource.findOne({ where: { id: resourceId } });
 		await job.removeResource(resource);
-		return interaction.reply('The job resource was removed.');
+		return interaction.reply('Job resource removed.');
 	},
 };

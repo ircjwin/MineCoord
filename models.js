@@ -8,7 +8,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 });
 
 module.exports = {
-	Mark: sequelize.define('mark', {
+	Landmark: sequelize.define('landmark', {
 		underscored: true,
 		id: {
 			type: Sequelize.INTEGER,
@@ -48,7 +48,7 @@ module.exports = {
 			allowNull: false,
 			unqiue: true,
 		},
-		desc: {
+		description: {
 			type: Sequelize.STRING,
 		},
 	}),
@@ -95,7 +95,7 @@ module.exports = {
 
 		await this.Job.sync();
 		await this.Resource.sync();
-		await this.Mark.sync();
+		await this.Landmark.sync();
 		await this.JobResource.sync();
 	},
 };

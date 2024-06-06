@@ -17,8 +17,8 @@ module.exports = {
 				.setRequired(true)
 				.setAutocomplete(true))
 		.addNumberOption(option =>
-			option.setName('quantity')
-				.setDescription('The total resource quantity for the job.')
+			option.setName('total-quantity')
+				.setDescription('Total quantity for the job resource.')
 				.setRequired(true)),
 	async autocomplete(interaction) {
 		const focusedOption = interaction.options.getFocused(true);
@@ -32,7 +32,7 @@ module.exports = {
 			choices = Cache.resourceCache;
 		}
 
-		if (focusedOption.name === 'quantity') {
+		if (focusedOption.name === 'total-quantity') {
 			return;
 		}
 
@@ -44,10 +44,10 @@ module.exports = {
 	async execute(interaction) {
 		const jobId = parseInt(interaction.options.getString('job'));
 		const resourceId = parseInt(interaction.options.getString('resource'));
-		const resourceQty = interaction.options.getNumber('quantity');
+		const totalQuantity = interaction.options.getNumber('total-quantity');
 		const job = await Job.findOne({ where: { id: jobId } });
 		const resource = await Resource.findOne({ where: { id: resourceId } });
-		await job.addResource(resource, { through: { totalQuantity: resourceQty } });
+		await job.addResource(resource, { through: { totalQuantity: totalQuantity } });
 		return interaction.reply('You added a resource to a job.');
 	},
 };

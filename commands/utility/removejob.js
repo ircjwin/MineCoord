@@ -8,15 +8,15 @@ module.exports = {
 		.setDescription('Removes job from database.')
 		.addStringOption(option =>
 			option
-				.setName('desc')
-				.setDescription('The description of the job.')
+				.setName('name')
+				.setDescription('Name of the job.')
 				.setRequired(true)),
 	async execute(interaction) {
-		const jobDesc = interaction.options.getString('desc');
-		const rowCount = await Job.destroy({ where: { desc: jobDesc } });
+		const jobName = interaction.options.getString('name');
+		const rowCount = await Job.destroy({ where: { name: jobName } });
 
 		if (!rowCount) return interaction.reply('That job did not exist.');
 		await Cache.loadJobCache();
-		return interaction.reply('Job deleted.');
+		return interaction.reply('Job removed.');
 	},
 };

@@ -17,8 +17,8 @@ module.exports = {
 				.setRequired(true)
 				.setAutocomplete(true))
 		.addNumberOption(option =>
-			option.setName('fill-quantity')
-				.setDescription('The fill quantity for the job resource.')
+			option.setName('filled-quantity')
+				.setDescription('Filled quantity for the job resource.')
 				.setRequired(true)),
 	async autocomplete(interaction) {
 		const focusedOption = interaction.options.getFocused(true);
@@ -32,7 +32,7 @@ module.exports = {
 			choices = Cache.resourceCache;
 		}
 
-		if (focusedOption.name === 'fill-quantity') {
+		if (focusedOption.name === 'filled-quantity') {
 			return;
 		}
 
@@ -44,16 +44,16 @@ module.exports = {
 	async execute(interaction) {
 		const jobId = parseInt(interaction.options.getString('job'));
 		const resourceId = parseInt(interaction.options.getString('resource'));
-		let fillQty = interaction.options.getNumber('fill-quantity');
+		let filledQuantity = interaction.options.getNumber('filled-quantity');
 		const job = await Job.findOne({ where: { id: jobId } });
 		const resource = await Resource.findOne({ where: { id: resourceId } });
 		const jobResource = await job.getJobResources({ where: { resourceId: resourceId } });
-		const totalQty = jobResource.totalQuantity;
-		fillQty += jobResource.filledQuantity;
+		const totalQuantity = jobResource.totalQuantity;
+		filledQuantity += jobResource.filledQuantity;
 
 		try {
 			await job.removeResource(resource);
-			await job.addResource(resource, { through: { filledQuantity: fillQty, totalQuantity: totalQty } });
+			await job.addResource(resource, { through: { filledQuantity: filledQuantity, totalQuantity: totalQuantity } });
 		}
 		catch (error) {
 			return interaction.reply('Something went wrong with filling the job resource.');

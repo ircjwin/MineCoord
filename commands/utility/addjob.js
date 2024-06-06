@@ -9,22 +9,22 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName('name')
-				.setDescription('The name of the job.')
+				.setDescription('Name of the job.')
 				.setRequired(true))
 		.addStringOption(option =>
 			option
-				.setName('desc')
-				.setDescription('The description of the job.')),
+				.setName('description')
+				.setDescription('Description of the job.')),
 	async execute(interaction) {
 		const jobPoster = interaction.user.username;
 		const jobName = interaction.options.getString('name');
-		const jobDesc = interaction.options.getString('desc');
+		const jobDesc = interaction.options.getString('description');
 
 		try {
 			const job = await Job.create({
 				poster: jobPoster,
 				name: jobName,
-				desc: jobDesc,
+				description: jobDesc,
 			});
 			await Cache.loadJobCache();
 

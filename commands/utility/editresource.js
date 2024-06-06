@@ -9,12 +9,12 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName('name')
-				.setDescription('The name of the resource.')
+				.setDescription('Name of the resource.')
 				.setRequired(true))
 		.addStringOption(option =>
 			option
 				.setName('new-name')
-				.setDescription('The new name of the resource.')),
+				.setDescription('New name of the resource.')),
 	async execute(interaction) {
 		const resourceName = interaction.options.getString('name');
 		const newResourceName = interaction.options.getString('new-name');
