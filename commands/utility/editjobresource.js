@@ -47,10 +47,12 @@ module.exports = {
 		const newTotalQuantity = interaction.options.getNumber('new-total-quantity');
 		const job = await Job.findOne({ where: { id: jobId } });
 		const resource = await Resource.findOne({ where: { id: resourceId } });
+		const jobResource = await job.getJobResources({ where: { resourceId: resourceId } });
+		const filledQuantity = jobResource[0].filledQuantity;
 
 		try {
 			await job.removeResource(resource);
-			await job.addResource(resource, { through: { totalQuantity: newTotalQuantity } });
+			await job.addResource(resource, { through: { filledQuantity: filledQuantity, totalQuantity: newTotalQuantity } });
 		}
 		catch (error) {
 			return interaction.reply('Something went wrong with editing the job resource.');

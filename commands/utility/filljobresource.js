@@ -45,11 +45,12 @@ module.exports = {
 		const jobId = parseInt(interaction.options.getString('job'));
 		const resourceId = parseInt(interaction.options.getString('resource'));
 		let filledQuantity = interaction.options.getNumber('filled-quantity');
+
 		const job = await Job.findOne({ where: { id: jobId } });
 		const resource = await Resource.findOne({ where: { id: resourceId } });
 		const jobResource = await job.getJobResources({ where: { resourceId: resourceId } });
-		const totalQuantity = jobResource.totalQuantity;
-		filledQuantity += jobResource.filledQuantity;
+		const totalQuantity = jobResource[0].totalQuantity;
+		filledQuantity += jobResource[0].filledQuantity;
 
 		try {
 			await job.removeResource(resource);

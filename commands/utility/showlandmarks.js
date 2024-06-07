@@ -12,7 +12,7 @@ module.exports = {
 			stringBuffer.push(m.y ? `y: ${m.y}, ` : '');
 			stringBuffer.push(`z: ${m.z}`);
 			return stringBuffer.join('');
-		}).join('\n') || 'No landmarks set.';
+		}).join('\n') || '    No landmarks set.';
 
 		return interaction.reply(`Landmarks:\n${landmarkString}`);
 	},

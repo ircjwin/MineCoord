@@ -1,9 +1,9 @@
 const { Job, Landmark, Resource } = require('./models.js');
 
 module.exports = {
-	jobCache: null,
-	landmarkCache: null,
-	resourceCache: null,
+	jobCache: [],
+	landmarkCache: [],
+	resourceCache: [],
 	async loadJobCache() {
 		this.jobCache = await Job.findAll({ attributes: ['id', 'name'] });
 	},

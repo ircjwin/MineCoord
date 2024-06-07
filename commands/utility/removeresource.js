@@ -12,7 +12,7 @@ module.exports = {
 				.setDescription('Name of the resource.')
 				.setRequired(true)),
 	async execute(interaction) {
-		const resourceName = interaction.options.getString('desc');
+		const resourceName = interaction.options.getString('name');
 		const rowCount = await Resource.destroy({ where: { name: resourceName } });
 
 		if (!rowCount) return interaction.reply('That resource did not exist.');
