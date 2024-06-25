@@ -32,10 +32,6 @@ module.exports = {
 			choices = Cache.resourceCache;
 		}
 
-		if (focusedOption.name === 'total-quantity') {
-			return;
-		}
-
 		const filtered = choices.filter(choice => choice.name.startsWith(focusedOption.value));
 		await interaction.respond(
 			filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
