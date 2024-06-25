@@ -10,7 +10,8 @@ module.exports = {
 			option
 				.setName('name')
 				.setDescription('Name of the job.')
-				.setRequired(true))
+				.setRequired(true)
+				.setAutocomplete(true))
 		.addStringOption(option =>
 			option
 				.setName('new-name')
@@ -19,8 +20,17 @@ module.exports = {
 			option
 				.setName('new-description')
 				.setDescription('New description of the job.')),
+	async autocomplete(interaction) {
+		const focusedValue = interaction.options.getFocused();
+		const choices = Cache.jobCache;
+
+		const filtered = choices.filter(choice => choice.name.startsWith(focusedValue));
+		await interaction.respond(
+			filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
+		);
+	},
 	async execute(interaction) {
-		const jobName = interaction.options.getString('name');
+		const jobId = parseInt(interaction.options.getString('name'));
 		const jobUpdates = {
 			name: interaction.options.getString('new-name'),
 			description: interaction.options.getString('new-description'),
@@ -32,13 +42,13 @@ module.exports = {
 			}
 		}
 
-		const affectedRows = await Job.update(jobUpdates, { where: { name: jobName } });
+		const affectedRows = await Job.update(jobUpdates, { where: { id: jobId } });
 
 		if (affectedRows > 0) {
 			await Cache.loadJobCache();
-			return interaction.reply(`Job ${jobName} was edited.`);
+			return interaction.reply(`Job ${jobId} was edited.`);
 		}
 
-		return interaction.reply(`Could not find a job with name ${jobName}.`);
+		return interaction.reply(`Could not find a job with name ${jobId}.`);
 	},
 };

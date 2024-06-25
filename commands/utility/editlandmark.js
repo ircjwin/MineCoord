@@ -10,7 +10,8 @@ module.exports = {
 			option
 				.setName('name')
 				.setDescription('Name of the landmark.')
-				.setRequired(true))
+				.setRequired(true)
+				.setAutocomplete(true))
 		.addStringOption(option =>
 			option
 				.setName('new-name')
@@ -27,8 +28,17 @@ module.exports = {
 			option
 				.setName('new-z')
 				.setDescription('New z-coordinate of the landmark.')),
+	async autocomplete(interaction) {
+		const focusedValue = interaction.options.getFocused();
+		const choices = Cache.landmarkCache;
+
+		const filtered = choices.filter(choice => choice.name.startsWith(focusedValue));
+		await interaction.respond(
+			filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
+		);
+	},
 	async execute(interaction) {
-		const landmarkName = interaction.options.getString('name');
+		const landmarkId = parseInt(interaction.options.getString('name'));
 		const landmarkUpdates = {
 			name: interaction.options.getString('new-name'),
 			x: interaction.options.getNumber('new-x'),
@@ -42,13 +52,13 @@ module.exports = {
 			}
 		}
 
-		const affectedRows = await Landmark.update(landmarkUpdates, { where: { name: landmarkName } });
+		const affectedRows = await Landmark.update(landmarkUpdates, { where: { id: landmarkId } });
 
 		if (affectedRows > 0) {
 			await Cache.loadLandmarkCache();
-			return interaction.reply(`Landmark ${landmarkName} was edited.`);
+			return interaction.reply(`Landmark ${landmarkId} was edited.`);
 		}
 
-		return interaction.reply(`Could not find a landmark with name ${landmarkName}.`);
+		return interaction.reply(`Could not find a landmark with name ${landmarkId}.`);
 	},
 };

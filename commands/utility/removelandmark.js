@@ -10,10 +10,20 @@ module.exports = {
 			option
 				.setName('name')
 				.setDescription('Name of the landmark.')
-				.setRequired(true)),
+				.setRequired(true)
+				.setAutocomplete(true)),
+	async autocomplete(interaction) {
+		const focusedValue = interaction.options.getFocused();
+		const choices = Cache.landmarkCache;
+
+		const filtered = choices.filter(choice => choice.name.startsWith(focusedValue));
+		await interaction.respond(
+			filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
+		);
+	},
 	async execute(interaction) {
-		const landmarkName = interaction.options.getString('name');
-		const rowCount = await Landmark.destroy({ where: { name: landmarkName } });
+		const landmarkId = parseInt(interaction.options.getString('name'));
+		const rowCount = await Landmark.destroy({ where: { id: landmarkId } });
 
 		if (!rowCount) return interaction.reply('That landmark did not exist.');
 		await Cache.loadLandmarkCache();
