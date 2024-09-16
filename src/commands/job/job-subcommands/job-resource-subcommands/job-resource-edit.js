@@ -21,27 +21,6 @@ module.exports = {
 				option.setName('new-total-quantity')
 					.setDescription('New total quantity for the job resource.')
 					.setRequired(true)),
-		async autocomplete(interaction) {
-			const focusedOption = interaction.options.getFocused(true);
-			let choices;
-
-			if (focusedOption.name === 'job') {
-				choices = Cache.jobCache;
-			}
-
-			if (focusedOption.name === 'resource') {
-				choices = Cache.resourceCache;
-			}
-
-			if (focusedOption.name === 'new-total-quantity') {
-				return;
-			}
-
-			const filtered = choices.filter(choice => choice.name.startsWith(focusedOption.value));
-			await interaction.respond(
-				filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
-			);
-		},
 		async execute(interaction) {
 			const jobId = parseInt(interaction.options.getString('job'));
 			const resourceId = parseInt(interaction.options.getString('resource'));

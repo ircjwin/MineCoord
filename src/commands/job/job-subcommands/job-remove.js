@@ -11,7 +11,8 @@ module.exports = {
 				option
 					.setName('name')
 					.setDescription('Name of the job.')
-					.setRequired(true)),
+					.setRequired(true)
+					.setAutocomplete(true)),
 		async execute(interaction) {
 			const jobName = interaction.options.getString('name');
 			const rowCount = await Job.destroy({ where: { name: jobName } });

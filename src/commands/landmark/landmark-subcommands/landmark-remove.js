@@ -11,7 +11,8 @@ module.exports = {
 				option
 					.setName('name')
 					.setDescription('Name of the landmark.')
-					.setRequired(true)),
+					.setRequired(true)
+					.setAutocomplete(true)),
 		async execute(interaction) {
 			const landmarkName = interaction.options.getString('name');
 			const rowCount = await Landmark.destroy({ where: { name: landmarkName } });

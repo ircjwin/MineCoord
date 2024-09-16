@@ -12,15 +12,6 @@ module.exports = {
 					.setDescription('Job to search for.')
 					.setRequired(true)
 					.setAutocomplete(true)),
-		async autocomplete(interaction) {
-			const focusedValue = interaction.options.getFocused();
-			const choices = Cache.jobCache;
-
-			const filtered = choices.filter(choice => choice.name.startsWith(focusedValue));
-			await interaction.respond(
-				filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
-			);
-		},
 		async execute(interaction) {
 			const jobId = parseInt(interaction.options.getString('job'));
 			const job = await Job.findOne({ where: { id: jobId } });

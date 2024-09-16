@@ -11,7 +11,8 @@ module.exports = {
 				option
 					.setName('name')
 					.setDescription('Name of the landmark.')
-					.setRequired(true))
+					.setRequired(true)
+					.setAutocomplete(true))
 			.addStringOption(option =>
 				option
 					.setName('new-name')

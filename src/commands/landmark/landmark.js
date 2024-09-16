@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { Cache } = require('../../cache.js');
 const { LandmarkAdd } = require('./landmark-subcommands/landmark-add.js');
 const { LandmarkRemove } = require('./landmark-subcommands/landmark-remove.js');
 const { LandmarkEdit } = require('./landmark-subcommands/landmark-edit.js');
@@ -12,6 +13,14 @@ module.exports = {
 		.addSubcommand(LandmarkRemove.data)
 		.addSubcommand(LandmarkEdit.data)
 		.addSubcommand(LandmarkShow.data),
+	async autocomplete(interaction) {
+		const focusedValue = interaction.options.getFocused();
+		const choices = Cache.landmarkCache;
+		const filtered = choices.filter(choice => choice.name.startsWith(focusedValue));
+		await interaction.respond(
+			filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
+		);
+	},
 	async execute(interaction) {
 		console.log(interaction);
 	},
