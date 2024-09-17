@@ -11,4 +11,7 @@ node_modules/
 config.json
 
 # Design docs folder
-~design/
+design/
+
+# Deprecated features folder
+deprecated/

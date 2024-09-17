@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "launch": "node deploy-commands.js && node index.js"
+    "start": "node deploy-commands.js && node index.js"
   },
   "keywords": [],
   "author": "Christopher 'C.J.' Irwin",
   "license": "AGPL-3.0-only",
   "dependencies": {
     "discord.js": "^14.14.1",
+    "minecraft-data": "^3.68.0",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7"
   },
