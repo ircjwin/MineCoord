@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Cache } = require('../../cache.js');
+const Cache = require('../../cache.js');
 const { JobAdd } = require('./job-subcommands/job-add.js');
 const { JobRemove } = require('./job-subcommands/job-remove.js');
 const { JobEdit } = require('./job-subcommands/job-edit.js');
@@ -27,12 +27,39 @@ module.exports = {
 			choices = Cache.resourceCache;
 		}
 
-		const filtered = choices.filter(choice => choice.name.startsWith(focusedOption.value));
+		const filtered = choices.filter(function(choice) {
+			if (this.count < 25 && choice.name.startsWith(focusedOption.value)) {
+				this.count++;
+				return true;
+			}
+			return false;
+		}, { count: 0 });
+
 		await interaction.respond(
 			filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
 		);
 	},
 	async execute(interaction) {
-		console.log(interaction);
+		if (interaction.options.getSubcommandGroup()) {
+			JobResourceSubgroup.execute(interaction);
+		}
+		else {
+			switch (interaction.options.getSubcommand()) {
+			case 'add':
+				JobAdd.execute(interaction);
+				break;
+			case 'remove':
+				JobRemove.execute(interaction);
+				break;
+			case 'edit':
+				JobEdit.execute(interaction);
+				break;
+			case 'show':
+				JobShow.execute(interaction);
+				break;
+			default:
+				interaction.reply(`${interaction.options.getSubcommand()} is not a valid subcommand for Job.`);
+			}
+		}
 	},
 };

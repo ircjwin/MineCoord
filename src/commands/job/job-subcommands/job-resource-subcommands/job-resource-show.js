@@ -1,6 +1,6 @@
 const { SlashCommandSubcommandBuilder } = require('discord.js');
 const { Job, Resource } = require('../../../../models.js');
-const Cache = require('../../../../cache.js');
+// const Cache = require('../../../../cache.js');
 
 module.exports = {
 	JobResourceShow: {

@@ -16,5 +16,26 @@ module.exports = {
 			.addSubcommand(JobResourceEdit.data)
 			.addSubcommand(JobResourceShow.data)
 			.addSubcommand(JobResourceFill.data),
+		async execute(interaction) {
+			switch (interaction.options.getSubcommand()) {
+			case 'add':
+				JobResourceAdd.execute(interaction);
+				break;
+			case 'remove':
+				JobResourceRemove.execute(interaction);
+				break;
+			case 'edit':
+				JobResourceEdit.execute(interaction);
+				break;
+			case 'show':
+				JobResourceShow.execute(interaction);
+				break;
+			case 'fill':
+				JobResourceFill.execute(interaction);
+				break;
+			default:
+				interaction.reply(`${interaction.options.getSubcommand()} is not a valid subcommand for Job Resource.`);
+			}
+		},
 	},
 };

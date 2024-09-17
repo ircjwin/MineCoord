@@ -1,6 +1,6 @@
 const { SlashCommandSubcommandBuilder } = require('discord.js');
 const { Job, Resource } = require('../../../../models.js');
-const Cache = require('../../../../cache.js');
+// const Cache = require('../../../../cache.js');
 
 module.exports = {
 	JobResourceAdd: {
@@ -21,27 +21,6 @@ module.exports = {
 				option.setName('total-quantity')
 					.setDescription('Total quantity for the job resource.')
 					.setRequired(true)),
-		async autocomplete(interaction) {
-			const focusedOption = interaction.options.getFocused(true);
-			let choices;
-
-			if (focusedOption.name === 'job') {
-				choices = Cache.jobCache;
-			}
-
-			if (focusedOption.name === 'resource') {
-				choices = Cache.resourceCache;
-			}
-
-			if (focusedOption.name === 'total-quantity') {
-				return;
-			}
-
-			const filtered = choices.filter(choice => choice.name.startsWith(focusedOption.value));
-			await interaction.respond(
-				filtered.map(choice => ({ name: choice.name, value: choice.id.toString() })),
-			);
-		},
 		async execute(interaction) {
 			const jobId = parseInt(interaction.options.getString('job'));
 			const resourceId = parseInt(interaction.options.getString('resource'));

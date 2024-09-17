@@ -83,6 +83,26 @@ module.exports = {
 			allowNull: false,
 		},
 	}),
+	async loadResources() {
+		const minecraftData = require('minecraft-data');
+		const mcData = minecraftData('1.20');
+		// Mobs?
+
+		const blocks = mcData.blocksArray.map(b => { return { name: b.displayName }; });
+		const items = mcData.itemsArray.map(i => { return { name: i.displayName }; });
+		const foods = mcData.foodsArray.map(f => { return { name: f.displayName }; });
+		const enchants = mcData.enchantmentsArray.map(e => { return { name: e.displayName }; });
+		const entities = mcData.entitiesArray.map(e => { return { name: e.displayName }; });
+		const resourceData = blocks.concat(items, foods, enchants, entities);
+
+		try {
+			await this.Resource.bulkCreate(resourceData, { ignoreDuplicates: true });
+			console.log(`Minecraft Version ${mcData.version}: Data loaded!`);
+		}
+		catch (error) {
+			console.log(`Resource Table Error: ${error}`);
+		}
+	},
 	async init() {
 		this.Job.belongsToMany(this.Resource, { through: this.JobResource });
 		this.Resource.belongsToMany(this.Job, { through: this.JobResource });
@@ -97,5 +117,6 @@ module.exports = {
 		await this.Resource.sync();
 		await this.Landmark.sync();
 		await this.JobResource.sync();
+		await this.loadResources();
 	},
 };
