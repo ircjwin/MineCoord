@@ -28,7 +28,7 @@ Your *Client ID* and *Token* can be retrieved from the [Discord Developer Portal
 Invite the bot to your Discord server. Refer to this [discord.js Guide page](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links) for help.
 
 ### launch
-Run `npm run launch` in the same terminal as before. A *read*y message will appear when the bot has successfully logged in. The bot can now be interacted with in your Discord server.
+Run `npm run start` in the same terminal as before. A *read*y message will appear when the bot has successfully logged in. The bot can now be interacted with in your Discord server.
 
 ## License
 Copyright &copy; 2024 Chris "C.J." Irwin<br>
