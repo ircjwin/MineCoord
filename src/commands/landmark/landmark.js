@@ -18,7 +18,7 @@ module.exports = {
 		const choices = Cache.landmarkCache;
 
 		const filtered = choices.filter(function(choice) {
-			if (this.count < 25 && choice.name.startsWith(focusedValue)) {
+			if (this.count < 25 && choice.name.toLowerCase().startsWith(focusedValue.toLowerCase())) {
 				this.count++;
 				return true;
 			}
