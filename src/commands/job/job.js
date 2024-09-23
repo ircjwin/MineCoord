@@ -28,7 +28,7 @@ module.exports = {
 		}
 
 		const filtered = choices.filter(function(choice) {
-			if (this.count < 25 && choice.name.startsWith(focusedOption.value)) {
+			if (this.count < 25 && choice.name.toLowerCase().startsWith(focusedOption.value.toLowerCase())) {
 				this.count++;
 				return true;
 			}
